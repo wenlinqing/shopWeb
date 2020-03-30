@@ -44,7 +44,7 @@
             <div class="orderShop">
                 <div class="" style="overflow: hidden;">
                     <div class="flex flexbetween">
-                        <h2 v-if="items.status==1">配送员: {{items.riderName}}  {{items.riderPhone}}</h2>
+                        <h2 v-if="items.status==1||items.status==2">配送员: {{items.riderName}}  {{items.riderPhone}}</h2>
                         <a :href="'tel:'+items.riderPhone" v-if="items.status==1" class="el-icon-phone makePhone"></a>
                     </div>
                     <div class="shopsTag">
@@ -58,14 +58,14 @@
             <div class="orderPrice flex flexbetween">
                 <div class="orPrice flex flex_ac">
                     <div v-if="items.payWay==0">应付<i>￥</i><b>{{items.totalPrice}}</b></div>
-                    <div v-if="items.payWay==1">配送员正在赶来....</b></div>
+                    <div v-if="items.payWay==1">已付<i>￥</i><b>{{items.totalPrice}}</b></div>
                     <span>共 {{items.totalAmount}} 件</span>
                 </div>
-                <div class="orderAct flex flex_ac">
+                <div class="orderAct flex flex_ac" style="margin-left: 5px">
                     <i  v-if="items.status==0" style="color: #6b90ff">待配送</i>
                     <i  v-if="items.status==1" style="color: #ff2323">配送中</i>
                     <i  v-if="items.status==2" style="color: #29d800">已完成</i>
-                    <i  v-if="items.status==3||items.status==4">已取消</i>
+                    <i  v-if="items.status==3||items.status==4" style="font-size: 12px;">已取消 <b v-if="items.payWay==1" style="color: #f00;">金额已退回账户</b></i>
                     <div @click="cancelOrder(items)" v-if="items.status==0">取消</div>
                 </div>
             </div>
@@ -99,35 +99,25 @@ export default {
         document.getElementById("scrollDiv").addEventListener("scroll", this.handleScroll)
     },
     created(){
-        // this.$dialog.loading.close();
+        this.$dialog.loading.close();
         this.getOrderList();
-        // this.$api.post('/riders/incomeInfos',{
-        //     userId:this.userInfo.userId
-        // },result=>{
-        //     this.incomeInfos=result.data
-        // },err=>{
-        //     this.$dialog.loading.close();
-        //     this.$dialog.toast({
-        //       mes: err.msg,
-        //       timeout: 2000,
-        //       icon: 'error'
-        //     });
-        // })
-
-        this.$api.post('/users/userAssets',{
-            userId:this.userInfo.userId
-        },result=>{
-            this.userAssets=result.data
-        },err=>{
-            this.$dialog.loading.close();
-            this.$dialog.toast({
-              mes: err.msg,
-              timeout: 2000,
-              icon: 'error'
-            });
-        })
+        this.getUserAssets()
     },
     methods:{
+        getUserAssets(){
+            this.$api.post('/users/userAssets',{
+                userId:this.userInfo.userId
+            },result=>{
+                this.userAssets=result.data
+            },err=>{
+                this.$dialog.loading.close();
+                this.$dialog.toast({
+                  mes: err.msg,
+                  timeout: 2000,
+                  icon: 'error'
+                });
+            })
+        },
         goFeedback(){
             if (!sessionStorage.getItem('session')) {
                 this.$router.replace('/shopWeb/login')
@@ -150,6 +140,7 @@ export default {
                     this.$dialog.loading.open(' ');
                     this.$api.post('/users/cancelOrder',{
                         orderNo:items.orderNo,
+                        items:items,
                         actions: 0,
                     },result=>{
                         this.$dialog.loading.close();
@@ -159,6 +150,7 @@ export default {
                             icon: 'success',
                             callback:()=>{
                                 this.getOrderList()
+                                this.getUserAssets()
                             }
                         });
                     },err=>{

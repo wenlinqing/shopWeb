@@ -101,7 +101,7 @@ export default {
 	    	userInfo:JSON.parse(sessionStorage.getItem('session'))||{},//tradePwd
 	    	shopName:'农惠千家原生态',
 	        addList: {},
-	        products:JSON.parse(sessionStorage.getItem("products")),
+	        products:JSON.parse(localStorage.getItem("products")),
 	        newcomer: JSON.parse(sessionStorage.getItem('session')).newcomer,
 	        totalPrice:0,
 	        totalAmount:0,
@@ -162,7 +162,6 @@ export default {
 	},
 	methods: {
 		changePay(way){
-
 			if (way==1&&this.userAssets.enabledMoney<((this.finalPrice/100)+1) ) {
 				this.$dialog.toast({
 		            mes: '可用余额不足，请在个人中心充值',
@@ -171,13 +170,6 @@ export default {
 				return
 			}
 			this.payway=way;
-			
-		},
-		showTxt(){
-			this.$dialog.toast({
-	            mes: '敬请期待',
-	            timeout: 1500,
-	        })
 		},
 		callbackFun(){
 			if (this.radio==2) {
@@ -194,7 +186,7 @@ export default {
 		},
 	    getTotalMoney() {
 	        var totalPrice=0,finalPrice=0;
-            var products=JSON.parse(sessionStorage.getItem("products"))
+            var products=JSON.parse(localStorage.getItem("products"))
             for (var i = 0; i < products.length; i++){
                 var salePrice=0,prePrice=0;
                 if(this.newcomer==1){
@@ -222,11 +214,13 @@ export default {
 	    	// console.log('输入的密码是：' + val);
             this.$dialog.loading.open('验证支付密码');
             if (val==this.userInfo.tradePwd) {
-            	this.$dialog.loading.close();
-            	sessionStorage.setItem('isSave',true)
-            	this.isSave=sessionStorage.getItem('isSave');
-            	this.showKeybord=false;
-            	this.submitOrder()
+            	setTimeout(() => {
+	            	this.$dialog.loading.close();
+	            	sessionStorage.setItem('isSave',true)
+	            	this.isSave=true;
+	            	this.showKeybord=false;
+	            	this.submitOrder()
+            	}, 800);
             }else{
             	setTimeout(() => {
 	                this.$refs.keyboard.$emit('ydui.keyboard.error', '对不起，您的支付密码不正确，请重新输入。');
@@ -235,11 +229,17 @@ export default {
             }
 	    },
 	    orderType(){
-	    	if (this.payway==1&&this.isSave=='') {
-	    		this.showKeybord=true;
-	    	}else{
-	    		this.submitOrder()
-	    	}
+	    	this.$dialog.confirm({
+                title: '温馨提示',
+                mes: '确定订单信息无误，继续提交？',
+                opts: () => { 
+                	if (this.payway==1&&this.isSave=='') {
+			    		this.showKeybord=true;
+			    	}else{
+			    		this.submitOrder()
+			    	}
+                }
+            });
 	    },
 	    submitOrder(){
 	    	if (!this.addList.addressId) {
@@ -313,34 +313,34 @@ export default {
 	    	// console.log('data=',data,values)
 	    	// return
 	    	
-	    	this.$dialog.confirm({
+	    	/*this.$dialog.confirm({
                 title: '温馨提示',
                 mes: '确定订单信息无误，继续提交？',
-                opts: () => {
-                    this.$dialog.loading.open(" ")
-			    	this.$api.post("/order/createOrder", data, (result)=> {
-		                this.$dialog.loading.close()
-		                this.$dialog.toast({
-		                    mes: "下单成功,我们将尽快给您送货",
-		                    timeout: 3000,
-		                    callback:()=> {
-		                        sessionStorage.removeItem("products")
-		                        var session=JSON.parse(sessionStorage.getItem('session'))
-		                        session.newcomer=0
-		                        sessionStorage.setItem("session",JSON.stringify(session))
-
-		                        this.goBack();
-		                    }
-		                })
-		            }, (err)=> {
-		                this.$dialog.loading.close();
-		                this.$dialog.toast({
-		                    mes: err.msg,
-		                    timeout: 1500
-		                })
-		            })
-                }
-            });
+                opts: () => {*/
+            this.$dialog.loading.open(" ")
+	    	this.$api.post("/order/createOrder", data, (result)=> {
+                this.$dialog.loading.close()
+                this.$dialog.toast({
+                    mes: "下单成功,我们将尽快给您送货",
+                    timeout: 3000,
+                    callback:()=> {
+                        localStorage.removeItem("products")
+                        var session=JSON.parse(sessionStorage.getItem('session'))
+                        session.newcomer=0
+                        sessionStorage.setItem("session",JSON.stringify(session))
+                        this.$dialog.loading.close()
+                        this.goBack();
+                    }
+                })
+            }, (err)=> {
+                this.$dialog.loading.close();
+                this.$dialog.toast({
+                    mes: err.msg,
+                    timeout: 1500
+                })
+            })
+            /*    }
+            });*/
 	    },
 	}
 }

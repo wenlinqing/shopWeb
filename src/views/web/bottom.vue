@@ -49,7 +49,7 @@
                 totalPrice:0,
                 totalNum:0,
                 newcomer: JSON.parse(sessionStorage.getItem('session')).newcomer,
-                products:JSON.parse(sessionStorage.getItem("products")),
+                products:JSON.parse(localStorage.getItem("products")),
                 finalPrice:0,// 最终价格
             }
         },
@@ -61,7 +61,7 @@
         },
         methods: {
             buyFun(type,productId){
-                var products=JSON.parse(sessionStorage.getItem("products"))
+                var products=JSON.parse(localStorage.getItem("products"))
                 if (type==2) {// 商品添加
                     for (var i = 0; i < products.length; i++){
                         if (products[i].productId === productId) {
@@ -77,14 +77,14 @@
                         }
                     }
                 }
-                sessionStorage.setItem("products", JSON.stringify(products));
+                localStorage.setItem("products", JSON.stringify(products));
                 this.products = products;
                 this.getTotal()
                 // this.$emit('childEmitParentFun');// 子组件 触发 父组件中的方法 
             },
             getTotal(){
                 var totalPrice=0,finalPrice=0;
-                var products=JSON.parse(sessionStorage.getItem("products"))
+                var products=JSON.parse(localStorage.getItem("products"))
                 for (var i = 0; i < products.length; i++){
                     var salePrice=0,prePrice=0;
                     if(this.newcomer==1){
@@ -116,12 +116,12 @@
                     type: 'warning'
                 }).then(() => {
                     this.totalPrice=0;
-                    var products=JSON.parse(sessionStorage.getItem("products"))
+                    var products=JSON.parse(localStorage.getItem("products"))
                     for (var i = 0; i < products.length; i++){
                         products[i].num=0
                     }
                     this.products=products
-                    sessionStorage.setItem("products",JSON.stringify(products))
+                    sessionStorage.setItem("localStorage",JSON.stringify(products))
                     this.$emit('childEmitParentFun');// 子组件 触发 父组件中的方法 
                 }).catch(() => {
 

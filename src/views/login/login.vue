@@ -24,7 +24,7 @@
 			</div>
 				
 			<div class="submit">
-				<el-button type="primary" @click="submitForm('ruleForm')" style="background:#5b8426;border:none;border-radius:20px;box-shadow:0px 4px 4px 0px rgba(226,75,62,0.33);">登 录</el-button>
+				<el-button type="primary" @click="submitForm()" style="background:#5b8426;border:none;border-radius:20px;box-shadow:0px 4px 4px 0px rgba(226,75,62,0.33);">登 录</el-button>
 				<div style="margin-top:10px;"><span style="color:#555;">新用户？</span><router-link to='/shopWeb/regist' style="color:#5b8426">立即注册</router-link></div>
 			</div>
 		</div>
@@ -51,20 +51,9 @@ export default{
 		/*for (var i = 0; i < 10; i++) {
 			console.log('No'+(moment().format('YYMMDDHHmm')).toString() + (Number(Math.random().toString().substr(3, 10)) + Date.now()).toString())
 		}*/
-		
-		this.$api.post('/riders/getDataList',{
-	        page: 1,
-	        pageSize:20,
-	      },result=>{
-	      	
-	      },err=>{
-	        this.$dialog.toast({
-	            mes: err.msg,
-	            timeout: 1500,
-	            icon: 'error'
-	        });
-	      })
-
+		/*if (localStorage.getItem('wwwmobile')&&localStorage.getItem('wwwpassword')) {
+			this.submitForm()
+		}*/
 	},
 	methods:{
 		showPwdFun(type){
@@ -77,7 +66,7 @@ export default{
 		clearName() {
 			this.ruleForm.mobile=''
 		},
-		submitForm(formName) {
+		submitForm() {
 			if (this.ruleForm.mobile.trim()=='') {
 				this.$dialog.toast({
 	                mes: '请输入手机号',

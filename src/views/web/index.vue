@@ -13,11 +13,11 @@
             </yd-slider-item>
         </yd-slider>
 
-        <!-- <yd-rollnotice autoplay="5000" class="indexNews">
-            <yd-rollnotice-item><span style="color:#F00;"> 荐 </span>荣耀V9 3月超级钜惠！</yd-rollnotice-item>
-            <yd-rollnotice-item><span style="color:#F00;"> 荐 </span>3.23京东超级品牌日格力盛典</yd-rollnotice-item>
-            <yd-rollnotice-item><span style="color:#F00;"> 荐 </span>京东服饰 早春新品低至7折</yd-rollnotice-item>
-        </yd-rollnotice> -->
+        <yd-rollnotice autoplay="5000" class="indexNews">
+            <yd-rollnotice-item><span> 庆 </span>热烈庆祝农惠千家原生态上线！</yd-rollnotice-item>
+            <yd-rollnotice-item><span> 欢 </span>欢迎新老客户下单，优惠多多！</yd-rollnotice-item>
+            <yd-rollnotice-item><span> 优 </span>个人中心开放充值优惠活动啦！</yd-rollnotice-item>
+        </yd-rollnotice>
         <div style="height: 50px" v-if="showNav"></div>
         <div class="navBox flex bgfff" :class="showNav?'fixed':''">
             <div class="flex1 flex flexcenter" :class="navTag==1?'on':''" @click="tagFun(1)"><span>首页</span></div>
@@ -86,9 +86,9 @@
         name: 'index',
         data () {
             return {
-                navTag: 1,
+                navTag: sessionStorage.getItem('navTag')?sessionStorage.getItem('navTag'):1,
                 newcomer: JSON.parse(sessionStorage.getItem('session')).newcomer,
-                dataList:JSON.parse(sessionStorage.getItem('products'))||[],
+                dataList:JSON.parse(localStorage.getItem('products'))||[],
                 showNav:!1,
                 showCar:!1,
                 showCarDetail:!1,
@@ -100,29 +100,12 @@
         },
         mounted(){
             this.$dialog.loading.close();
-            this.tagFun(1)
+            this.tagFun(this.navTag)
             this.showCarFun()
             document.getElementById('scrollDiv').addEventListener('scroll', this.handleScroll)
         },
         created(){
-
-            this.getDataList();
-            /*this.$api.post('/order/getParama',{
-                userId:'20032217351748174296162',
-                productId:'202003221584878200',
-                prices: [28.88, 20],
-                productCounts: [2, 3],
-                productIds: ["202003221584878200", "202003221584878007"],
-                values: [["202003221584878200", 28.88, 2], ["202003221584878007", 20, 3]]
-            },result=>{
-                
-            },err=>{
-              this.$dialog.toast({
-                  mes: err.msg,
-                  timeout: 1500,
-                  icon: 'error'
-              });
-            })*/
+            // this.getDataList();
         },
         beforeRouteLeave(to, from, next) {
             document.getElementById('scrollDiv').removeEventListener('scroll', this.handleScroll)
@@ -134,7 +117,7 @@
             },
             childEmitParentFun(){
                 // console.log('由子组件触发')
-                this.dataList = JSON.parse(sessionStorage.getItem("products"))
+                this.dataList = JSON.parse(localStorage.getItem("products"))
                 this.showCarDetail=!1;
                 this.showCarFun()
                 this.$forceUpdate()
@@ -165,7 +148,7 @@
                         }
                     }
                 }
-                sessionStorage.setItem('products',JSON.stringify(this.dataList))
+                localStorage.setItem('products',JSON.stringify(this.dataList))
                 this.showCarFun()
             },
             handleScroll(e){
@@ -179,9 +162,10 @@
             },
             tagFun(type){
                 this.navTag=type;
-                /*if (type==2&&this.dataList.length==0&&!sessionStorage.getItem('products')) {
+                sessionStorage.setItem('navTag',type)
+                if (type==2&&this.dataList.length==0&&!localStorage.getItem('products')) {
                     this.getDataList();
-                }*/
+                }
             },
             //获取商品列表
             getDataList() {
@@ -192,7 +176,7 @@
                 },result=>{
                     if (result.list.length>0) {
                         this.dataList=result.list;
-                        sessionStorage.setItem('products',JSON.stringify(result.list))
+                        localStorage.setItem('products',JSON.stringify(result.list))
                     }
                    this.total=result.totals
                 },err=>{

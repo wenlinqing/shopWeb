@@ -20,6 +20,9 @@
         <div class="loginItem">
           <input type="password" v-model.trim="ruleForm.passwordChk" placeholder="请再次输入密码">
         </div>
+        <div class="loginItem">
+          <input type="number" v-model.trim="ruleForm.tradePwd" placeholder="请设置支付密码6位数字">
+        </div>
 
 
 				<div class="submit" style="margin-top: 40px;">
@@ -62,6 +65,7 @@ export default{
             passwordChk: '',
             type:'web',
             actionType:'regist',
+            tradePwd:'',
         },
         rules: {
           username: [
@@ -76,7 +80,9 @@ export default{
           passwordChk: [
             {required: true, validator: validatePass2, trigger: 'blur' }
           ],
-          
+          tradePwd: [
+            { required: true, message: '不能为空', trigger: 'blur' }
+          ],
         }
     }
   },
@@ -135,6 +141,16 @@ export default{
             });
             return
         }
+        if (!isNaN(this.ruleForm.tradePwd) && this.ruleForm.tradePwd.length!=6) {
+            this.$dialog.toast({
+                mes: '支付密码输入有误',
+                timeout: 1500,
+                icon: 'error'
+            });
+            return
+        }
+        console.log(this.ruleForm)
+        return 
         this.$dialog.loading.open(' ');
         this.$api.post('/regist',this.ruleForm,result => {
             this.$dialog.loading.close();

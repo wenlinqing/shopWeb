@@ -15,9 +15,6 @@
                     <div class="flex flexbetween">
                         <h2>{{items.receiverName}}  {{items.receiverTel}}</h2>
                         <a :href="'tel:'+items.receiverTel" v-if="items.status==1" class="el-icon-phone makePhone"></a>
-                        <!-- span class="tuikuan" v-if="items.orderStatus==1">待支付</span>
-                        <span class="wancheng" v-if="items.orderStatus==2">已完成</span>
-                        <span class="wancheng" v-if="items.orderStatus==3">已取消</span> -->
                     </div>
                     <div class="shopsTag">
                         {{items.province}}{{items.city}}{{items.district}}{{items.receiverStreet}}{{items.houseNumber}}
@@ -30,7 +27,7 @@
             <div class="orderPrice flex flexbetween">
                 <div class="orPrice flex flex_ac">
                     <div v-if="items.payWay==0">应收<i>￥</i><b>{{items.totalPrice}}</b></div>
-                    <div v-if="items.payWay==1">已支付</b></div>
+                    <div v-if="items.payWay==1">已付<i>￥</i><b>{{items.totalPrice}}</b></div>
                     <div v-if="items.status==2">已收<i>￥</i><b>{{items.totalPrice}}</b></div>
                     <span>共 {{items.totalAmount}} 件</span>
                 </div>
@@ -92,6 +89,7 @@ export default {
                     this.$api.post('/order/rider/orderAction',{
                         orderNo:items.orderNo,
                         riderId:this.userInfo.riderId,
+                        items:items,
                         actions: 4,
                     },result=>{
                         this.$dialog.loading.close();
@@ -124,6 +122,7 @@ export default {
                         orderNo:items.orderNo,
                         userId:items.userId,
                         riderId:this.userInfo.riderId,
+                        items:items,
                         actions: 2,
                     },result=>{
                         this.$dialog.loading.close();

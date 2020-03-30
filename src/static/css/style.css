@@ -45,11 +45,12 @@ html,body{font-family: '微软雅黑',Arial!important;font-size: 14px!important;
 
 .bannerBox{height: 200px;overflow: hidden;}
 .indexNews{padding:0 10px;}
+.indexNews span{display: inline-block;padding:1px 10px;border-radius: 3px;background: #5b8426;color: #fff;font-size: 12px;margin-right: 5px}
 
 .navBox{height: 51px;border-bottom: 1px solid #eee;}
 .navBox div{transition: all .2s ease;font-size: 16px;font-weight: bold;}
-.navBox div.on{font-size: 18px;color: #E24B3E;}
-.navBox div.on span{border-bottom: 2px solid #E24B3E;line-height: 38px;padding: 0 10px;}
+.navBox div.on{font-size: 18px;color: #5b8426;}
+.navBox div.on span{border-bottom: 2px solid #5b8426;line-height: 38px;padding: 0 10px;}
 .content{padding:10px 10px 50px;}
 .content img{display: block;width: 100%;margin-bottom: 10px;}
 .content p{font-size: 16px;margin:15px 0;text-indent: 2em;line-height: 25px;}
