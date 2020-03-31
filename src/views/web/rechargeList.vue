@@ -42,7 +42,7 @@ export default {
 
     	getListDate(){
     		this.$dialog.loading.open(' ');
-    		this.$api.post('/users/web/rechargeList',{
+    		this.$api.post('/users/web/userAssetsDetail',{
 				userId:this.userInfo.userId,
 			},result => {
 				this.$dialog.loading.close();

@@ -13,9 +13,9 @@
             </yd-slider-item>
         </yd-slider>
 
-        <yd-rollnotice autoplay="5000" class="indexNews">
+        <yd-rollnotice autoplay="3000" class="indexNews">
             <yd-rollnotice-item><span> 庆 </span>热烈庆祝农惠千家原生态上线！</yd-rollnotice-item>
-            <yd-rollnotice-item><span> 欢 </span>欢迎新老客户下单，优惠多多！</yd-rollnotice-item>
+            <yd-rollnotice-item><span> 欢 </span>欢迎新老客户下单，充值多多 优惠多多！</yd-rollnotice-item>
             <yd-rollnotice-item><span> 优 </span>个人中心开放充值优惠活动啦！</yd-rollnotice-item>
         </yd-rollnotice>
         <div style="height: 50px" v-if="showNav"></div>
@@ -162,9 +162,13 @@
             },
             tagFun(type){
                 this.navTag=type;
-                sessionStorage.setItem('navTag',type)
-                if (type==2&&this.dataList.length==0&&!localStorage.getItem('products')) {
+                if (type==2&&!localStorage.getItem('products')) {
+                    sessionStorage.setItem('navTag',type)
+                    // console.log('aaaaaaaaaa')
                     this.getDataList();
+                }else{
+                    sessionStorage.setItem('navTag',type)
+                    // console.log('bbbbbbbb')
                 }
             },
             //获取商品列表
@@ -174,11 +178,21 @@
                     pageSize:20,
                     title: '',
                 },result=>{
-                    if (result.list.length>0) {
+                    if (localStorage.getItem('products')) {// 不是第一次进  要挑出购物车数据
+                        var products=JSON.parse(localStorage.getItem('products'));
+                        var list=result.list
+                        for (var i = 0; i < list.length; i++) {
+                            var num=products[i].num;
+                            Object.assign(products[i],...list[i])
+                            products[i].num=num;
+                            // console.log(num,list[i].num,products[i])
+                        }
+                        this.dataList=products;
+                        localStorage.setItem('products',JSON.stringify(products))
+                    }else{// 第一次进直接赋值
                         this.dataList=result.list;
                         localStorage.setItem('products',JSON.stringify(result.list))
                     }
-                   this.total=result.totals
                 },err=>{
                   this.$dialog.toast({
                       mes: err.msg,

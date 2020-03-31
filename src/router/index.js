@@ -78,7 +78,7 @@ const router= new Router({
 			component: resolve => require(['@/views/web/addressAdd'], resolve),
 			meta:{
 		        requireAuth:true,
-		        keepAlive:true,
+		        // keepAlive:true,
 		    },
 		},
 		{

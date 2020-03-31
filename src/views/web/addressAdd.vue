@@ -23,15 +23,16 @@
 				<input type="text" v-model.trim="ruleForm.receiverTel" placeholder="请输入联系电话">
 			</div>
 
-			<div class="invoiceItem flex flex_ac" @click="$router.push('/shopWeb/addressMapPosition')">
+			<div class="invoiceItem flex flex_ac" ><!-- @click="$router.push('/shopWeb/addressMapPosition')" -->
 				<label>地图定位</label>
-				<div>{{ruleForm.lat!=''&&ruleForm.lng!=''?ruleForm.province+ruleForm.city+ruleForm.district+' '+ruleForm.receiverStreet:'请选择定位'}} </div>
+				<!-- <div>{{ruleForm.lat!=''&&ruleForm.lng!=''?ruleForm.province+ruleForm.city+ruleForm.district+' '+ruleForm.receiverStreet:'请选择定位'}} </div> -->
+				<input @click.stop="show=true" v-model="receiveAdr" readonly placeholder="请选择收货地址">
 				<i class="el-icon-arrow-right"></i>
 			</div>
 
 			<div class="invoiceItem flex flex_ac">
 				<label>详细地址</label>
-				<input type="text" v-model.trim="ruleForm.houseNumber" placeholder="例：XX大厦2号楼1301室">
+				<input type="text" v-model.trim="ruleForm.houseNumber" placeholder="如门牌号，小区，楼栋号，单元室等">
 			</div>
 		</div>
     	
@@ -41,12 +42,13 @@
 		</div>
 		<div class="saveBtn flex flex_ac flexcenter" @click="saveFun">保存</div>
 
-		<!-- <div class="amap-wrapper" id="my_container" style="height:0;background:#fff;" v-if="tag=='add'"></div> -->
+		<yd-cityselect v-model="show" :callback="result" :items="district" ></yd-cityselect>
 	</div>
 </div>
 </template>
 
 <script>
+	import District from 'ydui-district/dist/jd_province_city_area_id';
 	export default {
 		name: 'addRemark',
 		data() {
@@ -68,9 +70,13 @@
 					userId:JSON.parse(sessionStorage.getItem('session')).userId||''
 				},
 				editAdrObj:{},
+
+				show: false,
+                receiveAdr: '',
+				district: District,
 			}
 		},
-		activated(){ // 组件keepalive后 更新数据变化
+		/*activated(){ // 组件keepalive后 更新数据变化
 		    // console.log('activated')
 		    if (sessionStorage.getItem('curPosi')) {
 		    	var curPosi=JSON.parse(sessionStorage.getItem('curPosi'))
@@ -88,31 +94,38 @@
                 this.ruleForm.lat=chooseMapAdr.location.lat
                 this.ruleForm.lng=chooseMapAdr.location.lng
             }
-		},
+		},*/
 		created(){
 			this.$dialog.loading.close();
 		},
 		mounted(){
 			if (this.tag=='add') {
-				if (sessionStorage.getItem('curPosi')) {
+				/*if (sessionStorage.getItem('curPosi')) {
 					var curPosi=JSON.parse(sessionStorage.getItem('curPosi'))
 					this.ruleForm.province = curPosi.province;
                     this.ruleForm.city = curPosi.city;
                     this.ruleForm.district = curPosi.district;
 
-                    // this.ruleForm.provinceCode = curPosi.adcode;
-                    // this.ruleForm.cityCode = curPosi.citycode;
+                    this.ruleForm.provinceCode = curPosi.adcode;
+                    this.ruleForm.cityCode = curPosi.citycode;
                 }
                 if (sessionStorage.getItem('chooseMapAdr')) {
                 	var chooseMapAdr=JSON.parse(sessionStorage.getItem('chooseMapAdr'))
                     this.ruleForm.receiverStreet=chooseMapAdr.name
-                }
+                }*/
 			}else{
 				this.ruleForm = Object.assign({},JSON.parse(sessionStorage.getItem('editAdrObj')))
 				this.isDefault=this.ruleForm.isDefault==1?true:false;
+				this.receiveAdr = this.ruleForm.province+' '+ this.ruleForm.city+' '+ this.ruleForm.district;
 			}
 		},
 		methods: {
+			result(ret) {
+                this.receiveAdr = ret.itemName1+' '+ ret.itemName2+' '+ ret.itemName3;
+                this.ruleForm.province = ret.itemName1;
+                this.ruleForm.city = ret.itemName2;
+                this.ruleForm.district = ret.itemName3;
+            },
 			delAdr: function() {
 	            var t = this;
 	            this.$confirm('确定删除该地址?', '提示', {
@@ -172,7 +185,7 @@
 
 				if (this.ruleForm.province==''||this.ruleForm.city=='') {
 					this.$dialog.toast({
-	                    mes: '请选择定位地址',
+	                    mes: '请选择收获地址',
 	                    timeout: 1500,
 	                    icon: 'error'
 	                })
@@ -188,6 +201,8 @@
 				}
 				this.$dialog.loading.open(" ")
 				this.ruleForm.isDefault = this.isDefault ? 1 : 0;
+				// console.log(this.ruleForm)
+				// return
 				if (this.tag=='add') {
 	                this.$api.post("/address/add", this.ruleForm,(r)=>{
 	                    this.$dialog.loading.close();
