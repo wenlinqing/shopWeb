@@ -51,9 +51,9 @@ export default{
 		/*for (var i = 0; i < 10; i++) {
 			console.log('No'+(moment().format('YYMMDDHHmm')).toString() + (Number(Math.random().toString().substr(3, 10)) + Date.now()).toString())
 		}*/
-		/*if (localStorage.getItem('wwwmobile')&&localStorage.getItem('wwwpassword')) {
+		if (localStorage.getItem('wwwmobile')&&localStorage.getItem('wwwpassword')) {
 			this.submitForm()
-		}*/
+		}
 	},
 	methods:{
 		showPwdFun(type){

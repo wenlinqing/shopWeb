@@ -12,8 +12,8 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
         '/shopApi/api/': {
-             // target: 'https://pay.mojivip.com', // 你接口的域名
-            target: 'http://www.hhlloo.com', // 你接口的域名
+            target: 'http://192.168.1.210:5000', // 你接口的域名
+            // target: 'http://www.hhlloo.com', // 你接口的域名
             secure: true,
             changeOrigin: true
         }

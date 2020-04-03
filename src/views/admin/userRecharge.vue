@@ -102,7 +102,7 @@ export default {
     },
     //获取用户列表
     getDataList() {
-      this.$api.post('/users/web/rechargeList',{
+      this.$api.post('/users/web/userAssetsDetail',{
         page: this.page,
         pageSize:this.pageSize,
       },result=>{

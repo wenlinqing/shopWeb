@@ -16,11 +16,11 @@
         </div>
 
         <div class="perAssetBox flex" style="margin-top: 20px">
-            <div class="flex1">
+            <div class="flex1" @click="$router.push('/shopWeb/rechargeList')">
                 <p>余额(￥)</p>
                 <h2>{{userAssets.enabledMoney}}</h2>
             </div>
-            <div class="flex1">
+            <div class="flex1" @click="$router.push('/shopWeb/rechargeList')">
                 <p>已消费(￥)</p>
                 <h2>{{userAssets.usedMoney}}</h2>
             </div>

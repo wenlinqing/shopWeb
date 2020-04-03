@@ -77,6 +77,21 @@
     </div>
 
     <bottom ref="mybottom" @childEmitParentFun="childEmitParentFun" class="fixed_bottom" v-if="showCarDetail"></bottom>
+
+    <div class="indexRedBg fixed" v-if="showRed"></div>
+    <div class="indexRedBoxer" v-if="showRed">
+        <div class="redbg1">
+            <div  class="logos"><img src="@/static/images/logo.png"></div>
+            <p v-if="redMoney==0">农惠千家给您发了一个红包</p>
+            <div v-if="redMoney==0" class="redBtn" :class="btnAct?'act':''" @click="gotRedFun"></div>
+            <p v-if="redMoney!=0">恭喜您 抢到 <b>{{redMoney}}</b> 现金红包</p>
+            <div v-if="redMoney!=0" class="redBtnOk" @click="showRed=!showRed">知道了</div>
+            <div class="redClose" @click="showRed=!showRed"><i class="el-icon-close"></i></div>
+        </div>
+        <div class="redbg2">
+            <p v-if="redMoney!=0">已存入账户余额，可直接进行消费</p>
+        </div>
+    </div>
 </div>
 </template>
 
@@ -86,13 +101,16 @@
         name: 'index',
         data () {
             return {
+                userInfo:JSON.parse(sessionStorage.getItem('session')),
                 navTag: sessionStorage.getItem('navTag')?sessionStorage.getItem('navTag'):1,
                 newcomer: JSON.parse(sessionStorage.getItem('session')).newcomer,
                 dataList:JSON.parse(localStorage.getItem('products'))||[],
                 showNav:!1,
                 showCar:!1,
                 showCarDetail:!1,
-
+                btnAct:false,
+                showRed:false,
+                redMoney:0,
             }
         },
         components: {
@@ -105,6 +123,17 @@
             document.getElementById('scrollDiv').addEventListener('scroll', this.handleScroll)
         },
         created(){
+            this.$api.post('/systems/getRedParama',{},result=>{
+                if (result.data.red_activity==1) {
+                    this.showRed=true;
+                }
+            },err=>{
+              this.$dialog.toast({
+                  mes: err.msg,
+                  timeout: 1500,
+                  icon: 'error'
+              });
+            })
             // this.getDataList();
         },
         beforeRouteLeave(to, from, next) {
@@ -112,6 +141,23 @@
             next();
         },
         methods:{
+            gotRedFun(){
+                this.btnAct=!0
+                setTimeout(()=>{
+                    this.$api.post('/users/web/getReds',{
+                        userId:this.userInfo.userId
+                    },result=>{
+                        this.redMoney=result.data
+                    },err=>{
+                        this.btnAct=!1
+                        this.$dialog.toast({
+                          mes: err.msg,
+                          timeout: 1500,
+                          icon: 'error'
+                        });
+                    })
+                },1500)
+            },
             goPersonal(){
                 this.$router.push('/shopWeb/userpersonal');
             },
