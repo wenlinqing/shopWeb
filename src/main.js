@@ -42,7 +42,6 @@ Vue.filter('formatDay',function(time){
 
 
 
-
 Vue.prototype.goBack = function () {
     window.history.go(-1)
 }

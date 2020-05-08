@@ -1,8 +1,5 @@
 // 配置API接口地址
 var root = '/shopApi/api/'
-// var root = '/api/'
-
-// var root = '/eshop-h5-web/api'
 
 // 引用axios
 var axios = require('axios')
@@ -27,9 +24,10 @@ function filterNull(o) {
 	return o
 }
 
-import { getCookie } from './cookie';
-import router from "@/router";
+import { Toast } from 'vue-ydui/dist/lib.px/dialog'
+window.Toast=Toast;
 
+import router from "@/router";
 
 function apiAxios(method, url, params, success, failure) {
 	if (params) {
@@ -39,7 +37,8 @@ function apiAxios(method, url, params, success, failure) {
 	axios({
 		headers: {
 			'Content-type': 'application/json;charse=UTF-8',
-			'authorization': session ? JSON.parse(session).roleType : '',
+			'authorization': localStorage.getItem('token')||'',
+			'roletype': session ? JSON.parse(session).roleType : '',
 			'userId':session ? JSON.parse(session).userId:'',
 		},
 		method: method,
@@ -50,15 +49,18 @@ function apiAxios(method, url, params, success, failure) {
 		withCredentials: false
 	})
 		.then(function (res) {
-			if (res.data.code === '100101'||res.data.code==='100109') {
-				router.push({
-					path: "/login",
-					query: { redirect: router.app._route.fullPath }
-				});
-				return false;
-			}
-
-			if (res.data.code === '200') {
+			if (res.data.code == '401') {
+				// router.push({
+				// 	path: "/login",
+				// 	query: { redirect: router.app._route.fullPath }
+				// });
+				Toast({
+	                mes: '请重新登录',
+	                timeout: 1500,
+	                icon: 'error'
+	            });
+				return;
+			}else if (res.data.code === '200') {
 				if (success) {
 					success(res.data)
 				}

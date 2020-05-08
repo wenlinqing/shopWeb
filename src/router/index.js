@@ -10,12 +10,21 @@ const router= new Router({
 	  		path:'*',
 	  		name:404,
 	  		hidden:true,
-	  		redirect: '/shopWeb/login'
+	  		redirect: '/shopWeb/test'
 	  	},
 		{
 			path: '/shopWeb/',
 			hidden:true,
-			redirect: '/shopWeb/login'
+			redirect: '/shopWeb/test'
+		},
+		{
+			path: '/shopWeb/test',
+			name: '',
+			hidden:true,
+			component: resolve => require(['@/views/web/test'], resolve),
+			meta:{
+		        // requireAuth:true,
+		    },
 		},
 		{
 			path: '/shopWeb/index',
@@ -23,7 +32,7 @@ const router= new Router({
 			hidden:true,
 			component: resolve => require(['@/views/web/index'], resolve),
 			meta:{
-		        requireAuth:true,
+		        requireAuth:false,
 		    },
 		},
 		{
@@ -207,7 +216,7 @@ const router= new Router({
 			hidden:true,
 			component: resolve => require(['@/views/rider/rider'], resolve),
 			meta:{
-		        requireAuth:false,
+		        requireAuth:true,
 		    },
 		},
 		{
@@ -216,7 +225,7 @@ const router= new Router({
 			hidden:true,
 			component: resolve => require(['@/views/rider/ridercenter'], resolve),
 			meta:{
-		        requireAuth:false,
+		        requireAuth:true,
 		    },
 		},
 		{

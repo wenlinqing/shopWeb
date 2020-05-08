@@ -135,7 +135,7 @@ export default {
         cancelOrder(items){
             this.$dialog.confirm({
                 title: '温馨提示',
-                mes: '确定取消该订单？',
+                mes: '订单派送中，确定取消该订单？',
                 opts: () => {
                     this.$dialog.loading.open(' ');
                     this.$api.post('/users/cancelOrder',{

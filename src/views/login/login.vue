@@ -98,6 +98,7 @@ export default{
 				this.$dialog.loading.close()
 				localStorage.setItem('wwwmobile',this.ruleForm.mobile)
 				localStorage.setItem('wwwpassword',this.ruleForm.password)
+				localStorage.setItem('token',result.userInfo.token)
 				sessionStorage.setItem('session',JSON.stringify(result.userInfo))
 				if (result.userInfo.roleType=='web') {
 					this.$router.replace('/shopWeb/index')
