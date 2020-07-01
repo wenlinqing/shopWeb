@@ -36,8 +36,11 @@ Vue.filter('formatDate',function(time){
     }
 })
 Vue.filter('formatDay',function(time){
-    time=Number(time)
-  return moment(time).format('YYYY-MM-DD')
+  if (time) {
+      return moment(time).format('YYYY-MM-DD')
+  }else{
+      return ''
+  }
 })
 
 

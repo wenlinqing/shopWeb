@@ -207,6 +207,14 @@ const router= new Router({
 				        requireAuth:true,
 				    },
 		      	},
+		      	{
+		      		path: '/admin/saleRecord',
+		      		name:'销售记录',
+		      		component: resolve => require(['@/views/admin/zhu_sales_record'], resolve),
+		      		meta:{
+				        requireAuth:true,
+				    },
+		      	},
 			]
 		},
 		////////////////////////////////////////////////////////////////////////////
