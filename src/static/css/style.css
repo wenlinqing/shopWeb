@@ -76,7 +76,7 @@ html,body{font-family: '微软雅黑',Arial!important;font-size: 14px!important;
 .productImg{padding-bottom: 100%;position: relative;overflow: hidden;}
 .productImg img{width: 100%;position: absolute;left: 50%;top: 50%;-webkit-transform:translate(-50%,-50%);z-index: 1}
 
-.fixedNav{width: 40px;height: 40px;position: fixed;bottom: 20px;left: 50%;margin-left: -20px;border-radius: 50%;background: rgba(0,0,0,0.3);}
+.fixedNav{width: 40px;height: 40px;position: fixed;bottom: 20px;left: 50%;margin-left: -20px;border-radius: 50%;background: rgba(0,0,0,0.3);z-index: 9;}
 .fixedNav img{width: 20px;display: block;}
 
 
@@ -279,7 +279,7 @@ font-size: 12px;padding:0 3px;}
 	position: absolute;bottom: -40px;left: 50%;margin-left: -12vw;}
 .redClose{position: absolute;top: 0;right: 0;padding:10px;}
 .redClose i{font-size: 26px;color: #ccc;}
-.redbg2 p{font-size: 14px;color: #e9e9e9;text-align: center;position: relative;top: 18vw}
+.redbg2 p{font-size: 14px;color: #e9e9e9;text-align: center;position: relative;top: 10vw}
 
 .redBtnOk{position: absolute;bottom: -10px;left: 50%;-webkit-transform:translateX(-50%);width: 100px;height: 40px;line-height: 40px;text-align: center;background: #fed44a;color: #333;font-size: 16px;font-weight: bold;border-radius: 5px;}
 

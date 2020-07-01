@@ -10,12 +10,12 @@ const router= new Router({
 	  		path:'*',
 	  		name:404,
 	  		hidden:true,
-	  		redirect: '/shopWeb/test'
+	  		redirect: '/shopWeb/index'
 	  	},
 		{
 			path: '/shopWeb/',
 			hidden:true,
-			redirect: '/shopWeb/test'
+			redirect: '/shopWeb/index'
 		},
 		{
 			path: '/shopWeb/test',
@@ -40,6 +40,15 @@ const router= new Router({
 			name: 'login',
 			hidden:true,
 			component: resolve => require(['@/views/login/login'], resolve),
+			meta:{
+		        requireAuth:false,
+		    },
+		},
+		{
+			path: '/shopWeb/riderLogin',
+			name: 'riderLogin',
+			hidden:true,
+			component: resolve => require(['@/views/login/riderLogin'], resolve),
 			meta:{
 		        requireAuth:false,
 		    },
@@ -264,7 +273,7 @@ router.beforeEach((to,from,next)=>{
 	      next();
 	    }else{
 	      next({
-	        path:'/login',
+	        path:'/shopWeb/login',
 	        query:{redirect: to.fullPath}
 	      });
 	    }

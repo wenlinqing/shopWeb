@@ -48,7 +48,7 @@
             return {
                 totalPrice:0,
                 totalNum:0,
-                newcomer: JSON.parse(sessionStorage.getItem('session')).newcomer,
+                newcomer: sessionStorage.getItem('session')?JSON.parse(sessionStorage.getItem('session')).newcomer:1,
                 products:JSON.parse(localStorage.getItem("products")),
                 finalPrice:0,// 最终价格
             }

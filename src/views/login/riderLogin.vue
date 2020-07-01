@@ -41,7 +41,7 @@ export default{
 			ruleForm: {
 				mobile: localStorage.getItem('wwwmobile')||'',
 				password: localStorage.getItem('wwwpassword')||'',
-				type:'web'
+				type:'riders'
 		    },
 			showPwd:false,
 		}
@@ -100,16 +100,11 @@ export default{
 				localStorage.setItem('wwwpassword',this.ruleForm.password)
 				localStorage.setItem('token',result.userInfo.token)
 				sessionStorage.setItem('session',JSON.stringify(result.userInfo))
-				// if (result.userInfo.roleType=='web') {
-				// 	this.$router.replace('/shopWeb/index')
-				// }else{
-				// 	this.$router.replace('/shopWeb/rider')
-				// }
-				if (this.$route.query.redirect) {
-                  this.$router.replace(this.$route.query.redirect)
-                }else{
-                  this.$router.replace('/shopWeb/index')
-                }
+				if (result.userInfo.roleType=='web') {
+					this.$router.replace('/shopWeb/index')
+				}else{
+					this.$router.replace('/shopWeb/rider')
+				}
 			},err=>{
 				this.$dialog.loading.close();
               	this.$dialog.toast({

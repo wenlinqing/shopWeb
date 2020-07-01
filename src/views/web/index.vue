@@ -90,6 +90,7 @@
         </div>
         <div class="redbg2">
             <p v-if="redMoney!=0">已存入账户余额，可直接进行消费</p>
+            <p>{{redInfo.red_startTime|formatDay}} ~ {{redInfo.red_endTime|formatDay}}</p>
         </div>
     </div>
 </div>
@@ -101,9 +102,9 @@
         name: 'index',
         data () {
             return {
-                userInfo:JSON.parse(sessionStorage.getItem('session')),
+                userInfo:JSON.parse(sessionStorage.getItem('session'))||{},
                 navTag: sessionStorage.getItem('navTag')?sessionStorage.getItem('navTag'):1,
-                newcomer: JSON.parse(sessionStorage.getItem('session')).newcomer,
+                newcomer: sessionStorage.getItem('session')?JSON.parse(sessionStorage.getItem('session')).newcomer:1,
                 dataList:JSON.parse(localStorage.getItem('products'))||[],
                 showNav:!1,
                 showCar:!1,
@@ -111,6 +112,7 @@
                 btnAct:false,
                 showRed:false,
                 redMoney:0,
+                redInfo:{}
             }
         },
         components: {
@@ -123,18 +125,21 @@
             document.getElementById('scrollDiv').addEventListener('scroll', this.handleScroll)
         },
         created(){
-            this.$api.post('/systems/getRedParama',{},result=>{
-                if (result.data.red_activity==1) {
-                    this.showRed=true;
-                }
-            },err=>{
-
-              this.$dialog.toast({
-                  mes: err.msg,
-                  timeout: 1500,
-                  icon: 'error'
-              });
-            })
+            if (sessionStorage.getItem('session')) {
+                this.$api.post('/systems/getRedParama',{},result=>{
+                    if (result.data.red_activity==1&&result.data.total==0) {
+                        this.redInfo=result.data
+                        this.showRed=true;
+                    }
+                },err=>{
+                  this.$dialog.toast({
+                      mes: err.msg,
+                      timeout: 1500,
+                      icon: 'error'
+                  });
+                })
+            }
+                
             // this.getDataList();
         },
         beforeRouteLeave(to, from, next) {
@@ -161,7 +166,11 @@
                 },1500)
             },
             goPersonal(){
-                this.$router.push('/shopWeb/userpersonal');
+                if (sessionStorage.getItem('session')) {
+                    this.$router.push('/shopWeb/userpersonal');
+                }else{
+                    this.$router.push('/shopWeb/login');
+                }
             },
             childEmitParentFun(){
                 // console.log('由子组件触发')
