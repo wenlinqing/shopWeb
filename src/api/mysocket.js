@@ -1,6 +1,6 @@
 let socket = null;
 let lockReconnet = false; //避免重复连接
-const wsUrl = 'ws://192.168.1.210:8082/aaa';
+const wsUrl = 'ws://192.168.1.207:8082/socketData';
 let isReconnet = false;
 let globalCallback = null,sendData = null; //把要发送给socket的数据和处理socket返回数据的回调保存起来
 let createSocket = url =>{ //创建socket
@@ -17,48 +17,47 @@ let createSocket = url =>{ //创建socket
     }
 }
 let sendMsg = (data, callback) =>{ //发送数据,接收数据
-	console.log('socket.readyState=',socket.readyState)
+	// console.log('socket.readyState=',socket.readyState)
     if (socket.readyState === 1) {
         globalCallback = callback;
         sendData = data;
-
-        data = JSON.stringify(data);
-        socket.send(data);
+        
+        socket.send(JSON.stringify(data));
     } else {
         setTimeout(() =>{
-            console.log(socket, '等待socket链接成功')
+            // console.log(socket, '等待socket链接成功')
             sendMsg(data, callback)
         },1500)
         return false
     }
     socket.onmessage = ev =>{
-    	console.log('onmessage=',ev)
+    	// console.log('onmessage=',ev)
         callback && callback(ev)
     }
 }
 let initSocket = () =>{ //初始化websocket
     socket.onopen = () =>{
-        console.log('socket连接成功')
+        // console.log('socket连接成功')
         heartCheck.reset().start() //后端说暂时不需要做心跳检测
         if (isReconnet) { //执行全局回调函数
-            console.log('websocket重新连接了')
+            // console.log('websocket重新连接了')
             sendMsg(sendData, globalCallback)
             isReconnet = false
         }
     }
 
     socket.onmessage = (ev) =>{
-        console.log(ev, '连接正常')
+        // console.log(ev, '连接正常')
         heartCheck.reset().start() //后端说暂时不需要做心跳检测
     }
 
     socket.onerror = () =>{
-        console.log('websocket服务出错了---onerror');
+        // console.log('websocket服务出错了---onerror');
         reconnet(wsUrl)
     }
 
     socket.onclose = () =>{
-        console.log('websocket服务关闭了+++onclose');
+        // console.log('websocket服务关闭了+++onclose');
         reconnet(wsUrl)
     }
 }
@@ -85,7 +84,7 @@ let heartCheck = { //心跳检测
         let that = this;
         this.timeoutObj = setTimeout(() =>{
             //发送数据，如果onmessage能接收到数据，表示连接正常,然后在onmessage里面执行reset方法清除定时器
-            socket.send(1)
+            socket.send(JSON.stringify(sendData))
             this.serverTimeoutObj = setTimeout(() =>{
                 socket.close()
             },that.timeout)
@@ -94,4 +93,4 @@ let heartCheck = { //心跳检测
     }
 }
 createSocket(wsUrl)
-export default { sendMsg }
+export { sendMsg,socket,wsUrl }

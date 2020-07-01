@@ -3,7 +3,7 @@
 		<br/><br/><br/>
 		<!-- <img src="@/static/images/loginIcon4.png" class="loginBack" style="width: 15px;" @click="goBack"> -->
 		<div class="loginBox" style="text-align:center;">
-			<a><img src="@/static/images/logo.png" ></a>
+			<!-- <a><img src="@/static/images/logo.png" ></a> -->
 		</div>
 		<div class="regist">
 			<div class="loginItem">

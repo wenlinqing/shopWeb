@@ -43,13 +43,15 @@
             <p>暂无数据</p>
         </div>
 
-        <div class="timeDown" v-if="orderTag==0">{{time}}s后自动刷新</div>
+        <!-- <div class="timeDown" v-if="orderTag==0">{{time}}s后自动刷新</div> -->
         <el-backtop target=".scrollDiv" style="color: #FFAA16;"></el-backtop>
     </div>
+    <audio src="/static/media.mp3" ref="audio" style="display: none;"> </audio>
 </div>
 </template>
 
 <script>
+import { sendMsg,socket } from '@/api/mysocket'
 export default {
     name: 'rider',
     data () {
@@ -60,6 +62,9 @@ export default {
             setInt:null,
             time:20,
         }
+    },
+    destroyed() {
+      socket.close() //离开路由之后断开websocket连接
     },
     beforeRouteLeave(to, from, next) {
         clearInterval(this.setInt)
@@ -72,13 +77,17 @@ export default {
     },
     methods:{
         timeFun(){
-            this.setInt=setInterval(()=>{
+            /*this.setInt=setInterval(()=>{
                 --this.time
                 if (this.time==0) {
                     this.time=20
                     this.getOrderList();
                 }
-            },1000)
+            },1000)*/
+            this.setInt=setInterval(()=>{
+                // this.orderList=[]
+                this.getOrderList()
+            },2000)
         },
         cancelOrder(items){
             this.$dialog.confirm({
@@ -195,21 +204,34 @@ export default {
             this.getOrderList();
         },
         getOrderList(){
-            this.$dialog.loading.open(' ');
-            this.$api.post('/order/riderOrder',{
-                riderId:this.userInfo.riderId,
-                orderTag: this.orderTag,
-            },result=>{
-                this.$dialog.loading.close();
-                this.orderList=result.list;
-            },err=>{
-                this.$dialog.loading.close();
-                this.$dialog.toast({
-                    mes: err.msg,
-                    timeout: 2500,
-                    icon: 'error'
-                });
-            })
+            if (this.orderTag==0) {
+                sendMsg({
+                    type:'rider',
+                    riderId:this.userInfo.riderId,
+                    orderTag:0
+                },ev=>{
+                    // console.log(ev.data)
+                    var data=JSON.parse(ev.data)
+                    this.$refs.audio.play()
+                    this.orderList=data;
+                })
+            }else{
+                this.$dialog.loading.open(' ');
+                this.$api.post('/order/riderOrder',{
+                    riderId:this.userInfo.riderId,
+                    orderTag: this.orderTag,
+                },result=>{
+                    this.$dialog.loading.close();
+                    this.orderList=result.list;
+                },err=>{
+                    this.$dialog.loading.close();
+                    this.$dialog.toast({
+                        mes: err.msg,
+                        timeout: 2500,
+                        icon: 'error'
+                    });
+                })
+            }
         }
     }
 }

@@ -14,7 +14,7 @@
         </yd-slider>
 
         <yd-rollnotice autoplay="3000" class="indexNews">
-            <yd-rollnotice-item><span> 庆 </span>热烈庆祝农惠千家原生态上线！</yd-rollnotice-item>
+            <yd-rollnotice-item><span> 庆 </span>热烈庆祝农惠万家原生态上线！</yd-rollnotice-item>
             <yd-rollnotice-item><span> 欢 </span>欢迎新老客户下单，充值多多 优惠多多！</yd-rollnotice-item>
             <yd-rollnotice-item><span> 优 </span>个人中心开放充值优惠活动啦！</yd-rollnotice-item>
         </yd-rollnotice>
@@ -25,9 +25,9 @@
             <div class="flex1 flex flexcenter" :class="navTag==3?'on':''" @click="tagFun(3)"><span>联系我们</span></div>
         </div>
         <section class="content bgfff" v-if="navTag==1">
-            <h1 style="padding: 20px 0 0;text-align: center;font-size: 20px;font-weight: bold;">农惠千家原生态</h1>
+            <h1 style="padding: 20px 0 0;text-align: center;font-size: 20px;font-weight: bold;">农惠万家原生态</h1>
             
-            <p>农惠千家原生态为您提供 原生态巴马香猪肉，原生态土鸡，有机大米，有机绿色蔬菜 等原生态农产品。我们将当季的新鲜的特色农产品，精挑细选后第一时间送到您的手中，让您吃出时尚，吃出健康，吃出高品质，吃出老滋味，吃出生命的活力，体验回归自然的美好人生。</p>
+            <p>农惠万家原生态为您提供 原生态巴马香猪肉，原生态土鸡，有机大米，有机绿色蔬菜 等原生态农产品。我们将当季的新鲜的特色农产品，精挑细选后第一时间送到您的手中，让您吃出时尚，吃出健康，吃出高品质，吃出老滋味，吃出生命的活力，体验回归自然的美好人生。</p>
             <img src="@/static/images/product/pro1.jpg">
             <p>原生态农产品指无污染，无农药残留，纯天然有机生活品。本公司专业经营原生态农产品，为您提供优质产品，营造优质生活。我公司经营 生态猪肉，生态土鸡，有机大米，有机绿色蔬菜等绿色产品。</p>
             <img src="@/static/images/product/pro2.jpg">
@@ -37,15 +37,15 @@
 
         <section class="content bgfff" v-if="navTag==3">
             <img src="@/static/images/lx.jpg">
-            <p>地址：农惠千家原生态</p>
-            <p>联系人： 农惠千家原生态</p>
+            <p>地址：农惠万家原生态</p>
+            <p>联系人： 农惠万家原生态</p>
             <p>电话：<a href="tel:88888888"> 8888-8888</a></p>
         </section>
 
         <div class="productBox flex" v-if="navTag==2">
             <div class="flexauto bgfff proItem" v-for="item,index in dataList" :key="index">
                 <a>
-                    <img :src="item.productImg" class="img">
+                    <div class="productImg"><img :src="item.productImg" class="img"></div>
                     <h2>{{item.productName}}</h2>
                     <section class="flex flexbetween price">
                         <span v-if="newcomer==1" style="font-size: 12px;">新人<i>{{item.newComerPrice}}</i>/{{item.unit}}</span><!-- 新人价 优先 -->
@@ -82,7 +82,7 @@
     <div class="indexRedBoxer" v-if="showRed">
         <div class="redbg1">
             <div  class="logos"><img src="@/static/images/logo.png"></div>
-            <p v-if="redMoney==0">农惠千家给您发了一个红包</p>
+            <p v-if="redMoney==0">农惠万家给您发了一个红包</p>
             <div v-if="redMoney==0" class="redBtn" :class="btnAct?'act':''" @click="gotRedFun"></div>
             <p v-if="redMoney!=0">恭喜您 抢到 <b>{{redMoney}}</b> 现金红包</p>
             <div v-if="redMoney!=0" class="redBtnOk" @click="showRed=!showRed">知道了</div>
@@ -128,6 +128,7 @@
                     this.showRed=true;
                 }
             },err=>{
+
               this.$dialog.toast({
                   mes: err.msg,
                   timeout: 1500,
@@ -149,6 +150,7 @@
                     },result=>{
                         this.redMoney=result.data
                     },err=>{
+                        this.showRed=false;
                         this.btnAct=!1
                         this.$dialog.toast({
                           mes: err.msg,

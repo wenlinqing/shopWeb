@@ -61,8 +61,8 @@ html,body{font-family: '微软雅黑',Arial!important;font-size: 14px!important;
 .productBox div.proItem{border-radius: 5px;padding:5px 5px 10px;width: calc(50% - 5px);margin-bottom: 10px;box-shadow:0px 0px 4px 0px rgba(204,204,204,0.3);margin-right: 5px;}
 .productBox div.proItem:nth-child(2n){margin-left: 5px;margin-right: 0;}
 .productBox div.proItem a{display: block;overflow: hidden;}
-.productBox div.proItem a img.img{display: block;width: 100%;border-radius: 5px;}
-.productBox div.proItem a h2{font-weight: bold;font-size: 16px;margin:5px 0;height: 45px;}
+/*.productBox div.proItem a img.img{display: block;width: 100%;border-radius: 5px;}*/
+.productBox div.proItem a h2{font-weight: bold;font-size: 16px;margin:5px 0;height: 45px;overflow : hidden;text-overflow: ellipsis;display: -webkit-box;-webkit-line-clamp: 2; -webkit-box-orient: vertical;}
 .productBox div.proItem a p{color: #666;}
 .productBox div.proItem a p i{color: #979797}
 .productBox div.proItem a p img{width: 12px}
@@ -73,7 +73,8 @@ html,body{font-family: '微软雅黑',Arial!important;font-size: 14px!important;
 .actionBox img{width: 25px;height: 25px;}
 .actionBox div.nums{width: 25px;height: 25px;line-height: 25px;text-align: center;}
 
-
+.productImg{padding-bottom: 100%;position: relative;overflow: hidden;}
+.productImg img{width: 100%;position: absolute;left: 50%;top: 50%;-webkit-transform:translate(-50%,-50%);z-index: 1}
 
 .fixedNav{width: 40px;height: 40px;position: fixed;bottom: 20px;left: 50%;margin-left: -20px;border-radius: 50%;background: rgba(0,0,0,0.3);}
 .fixedNav img{width: 20px;display: block;}
@@ -270,7 +271,7 @@ font-size: 12px;padding:0 3px;}
 .indexRedBoxer{width: 80vw;height: 90vw;position: fixed;top: 50%;left: 50%;-webkit-transform:translate(-50%,-50%);z-index: 1000;background: #f00;border-radius: 10px;overflow: hidden;}
 .redbg1{height: 70%;background: #f75b33 url(../images/redbg.png) no-repeat left bottom;background-size: 100%;padding-top: 20px;position: relative;}
 .redbg2{height: 30%;background: #e8430d;}
-.logos{width: 20vw;height: 20vw;border-radius: 50%;margin:0 auto 10vw;overflow: hidden;}
+.logos{width: 30vw;height: 30vw;border-radius: 50%;margin:0 auto 2vw;overflow: hidden;}
 .logos img{width: 100%;}
 .redbg1 p{font-size: 16px;color: #e9e9e9;text-align: center;}
 .redbg1 p b{font-weight: bold;font-size: 26px;color: #fed44a;}
