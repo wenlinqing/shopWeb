@@ -3,7 +3,7 @@
 	<div class="pageTop topTitle flex flexbetween flex_ac" style="border-bottom: none;">
         <div class="goBack flex flexcenter flex_ac" style="position: relative;" @click="goBack"><i class="el-icon-arrow-left"></i></div>
         <div class="texts">提现申请</div>
-        <div style="font-size: 14px;color:#999; padding:10px 15px;" @click="$router.push('/shopWeb/withdrawList')">提现记录</div>
+        <div style="font-size: 14px;color:#999; padding:10px 15px;" @click="$router.push('/withdrawList')">提现记录</div>
     </div>
 	<div  id="scrollDiv" style="height:calc(100vh - 45px);">
 		<div class="rechargeBox bgfff">

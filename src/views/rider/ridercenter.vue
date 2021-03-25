@@ -132,9 +132,9 @@ export default {
     methods:{
         goNext(){
             if (!sessionStorage.getItem('session')) {
-                this.$router.replace('/shopWeb/login')
+                this.$router.replace('/login')
             }else{
-                this.$router.push('/shopWeb/withdraw')
+                this.$router.push('/withdraw')
             }
         },
     }

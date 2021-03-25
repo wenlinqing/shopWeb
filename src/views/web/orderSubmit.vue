@@ -6,7 +6,7 @@
     </div>
 	<div  id="scrollDiv" class="scrollDivBg" style="height:calc(100vh - 140px);">
 		<div class="secTop linearBg">
-	        <div class="shopBox bgfff" @click="$router.push('/shopWeb/addressList?fromPaySubmit=1')" v-if="addList.receiverName">
+	        <div class="shopBox bgfff" @click="$router.push('/addressList?fromPaySubmit=1')" v-if="addList.receiverName">
 	            <div class="shops flex">
 	                <div class="flex1">
 	                    <h1 class="textElli">{{addList.province+addList.city+addList.district+' '+addList.receiverStreet+addList.houseNumber}} </h1>
@@ -15,7 +15,7 @@
 	                <i class="el-icon-arrow-right" style="font-size: 20px;"></i>
 	            </div>
 	        </div>
-	        <div class="shopBox bgfff" @click="$router.push('/shopWeb/addressList?fromPaySubmit=1')" v-if="!addList.receiverName">
+	        <div class="shopBox bgfff" @click="$router.push('/addressList?fromPaySubmit=1')" v-if="!addList.receiverName">
 	            <div class="shops flex">
 	                <div class="flex1">
 	                    <h1 class="textElli" style="margin-bottom: 0;">添加收获地址 <i class="el-icon-arrow-right"></i></h1>
@@ -248,7 +248,7 @@ export default {
                     timeout: 1500,
 		            icon: "error",
                     callback:()=> {
-                        this.$router.push('/shopWeb/addressList')
+                        this.$router.push('/addressList')
                     }
                 })
                 return

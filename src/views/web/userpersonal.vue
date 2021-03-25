@@ -16,16 +16,16 @@
         </div>
 
         <div class="perAssetBox flex" style="margin-top: 20px">
-            <div class="flex1" @click="$router.push('/shopWeb/rechargeList')">
+            <div class="flex1" @click="$router.push('/rechargeList')">
                 <p>余额(￥)</p>
                 <h2>{{userAssets.enabledMoney}}</h2>
             </div>
-            <div class="flex1" @click="$router.push('/shopWeb/rechargeList')">
+            <div class="flex1" @click="$router.push('/rechargeList')">
                 <p>已消费(￥)</p>
                 <h2>{{userAssets.usedMoney}}</h2>
             </div>
             
-            <router-link class="viewAssetLink" to="/shopWeb/recharge">充值 <i class="el-icon-arrow-right"></i></router-link>
+            <router-link class="viewAssetLink" to="/recharge">充值 <i class="el-icon-arrow-right"></i></router-link>
         </div>
     </div>
 
@@ -79,7 +79,7 @@
 
     </div>
 
-    <router-link class="backBtn flex flexcenter" style="left: auto;right: 5px;top: auto;bottom:25px;" to="/shopWeb/feedback"><i class="el-icon-message"></i></router-link>
+    <router-link class="backBtn flex flexcenter" style="left: auto;right: 5px;top: auto;bottom:25px;" to="/feedback"><i class="el-icon-message"></i></router-link>
 </div>
 </template>
 
@@ -120,16 +120,16 @@ export default {
         },
         goFeedback(){
             if (!sessionStorage.getItem('session')) {
-                this.$router.replace('/shopWeb/login')
+                this.$router.replace('/login')
             }else{
-                this.$router.push('/shopWeb/feedback')
+                this.$router.push('/feedback')
             }
         },
         goNext(){
             if (!sessionStorage.getItem('session')) {
-                this.$router.replace('/shopWeb/login')
+                this.$router.replace('/login')
             }else{
-                this.$router.push('/shopWeb/recharge')
+                this.$router.push('/recharge')
             }
         },
         cancelOrder(items){

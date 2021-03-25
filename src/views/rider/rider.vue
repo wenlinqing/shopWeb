@@ -6,7 +6,7 @@
             <div :class="orderTag==1?'on':''" @click="filterData(1)">配送中<span></span></div>
             <div :class="orderTag==2?'on':''" @click="filterData(2)">已完成<span></span></div>
         </div>
-        <div class="dongtai flex flexcenter" @click="$router.push('/shopWeb/ridercenter')"><img src="@/static/images/dongtaiTop.png"></div>
+        <div class="dongtai flex flexcenter" @click="$router.push('/ridercenter')"><img src="@/static/images/dongtaiTop.png"></div>
     </div>
     <div  id="scrollDiv" class="scrollDiv" style="height: calc(100vh - 46px);padding-bottom: 100px;">
         <div class="orderBox bgfff" v-for="items,indexs in orderList" :key="indexs">
@@ -212,7 +212,9 @@ export default {
                 },ev=>{
                     // console.log(ev.data)
                     var data=JSON.parse(ev.data)
-                    this.$refs.audio.play()
+                    if (data.length>0) {
+                        this.$refs.audio.play()
+                    }
                     this.orderList=data;
                 })
             }else{

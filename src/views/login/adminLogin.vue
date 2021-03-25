@@ -69,7 +69,7 @@
                   timeout: 1500,
                   icon: 'success',
                   callback: () => {
-                    this.$router.replace('/shopWeb/home')
+                    this.$router.replace('/home')
                   }
               });
             },err=>{

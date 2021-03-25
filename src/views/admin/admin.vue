@@ -47,7 +47,7 @@ export default {
                 timeout: 1500,
                 icon: 'success',
                 callback:()=>{
-                    this.$router.replace('/shopWeb/adminLogin')
+                    this.$router.replace('/adminLogin')
                 }
             });
         },err=>{

@@ -19,7 +19,7 @@
 
         <div class="submit" style="margin-top: 40px;">
           <el-button type="primary" style="background:#5b8426;border:none;border-radius:20px;box-shadow:0px 4px 4px 0px rgba(226,75,62,0.33);" @click="submitForm('ruleForm')">提交</el-button>
-          <div style="margin-top:10px;"><router-link to='/shopWeb/login' replace style="color:#5b8426">去登录</router-link></div>
+          <div style="margin-top:10px;"><router-link to='/login' replace style="color:#5b8426">去登录</router-link></div>
         </div>
       </el-form>
     </div>

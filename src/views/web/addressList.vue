@@ -3,7 +3,7 @@
 	<div class="pageTop flex flexcenter flex_ac">
         <div class="goBack flex flexcenter flex_ac" @click="goBack"><i class="el-icon-arrow-left"></i></div>
         收货地址
-        <div class="pageTopBtn" style="color: #616161" @click="$router.push('/shopWeb/addressAdd?tag=add&time='+new Date().getTime())">新增</div>
+        <div class="pageTopBtn" style="color: #616161" @click="$router.push('/addressAdd?tag=add&time='+new Date().getTime())">新增</div>
     </div>
 	<div  id="scrollDiv" style="height: calc(100vh - 45px)">
 		<div class="fapiaoBox bgfff">
@@ -54,7 +54,7 @@
 	        },
 	        editAdress(obj){
 	        	sessionStorage.setItem('editAdrObj',JSON.stringify(obj))
-	        	this.$router.push('/shopWeb/addressAdd?tag=edit&addressId='+obj.addressId)
+	        	this.$router.push('/addressAdd?tag=edit&addressId='+obj.addressId)
 	        },
 	        chooseAdr(obj){
 	        	if (this.fromPaySubmit!='') {

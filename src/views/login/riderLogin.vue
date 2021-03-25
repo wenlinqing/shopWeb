@@ -20,12 +20,12 @@
 					<!-- <el-radio v-model="ruleForm.type" label="web">用户登录</el-radio>
 	  				<el-radio v-model="ruleForm.type" label="riders">骑手登录</el-radio> -->
 				</div>
-				<router-link to='/shopWeb/password' style="color:#aaa;font-size:12px;">忘记密码？</router-link>
+				<router-link to='/password' style="color:#aaa;font-size:12px;">忘记密码？</router-link>
 			</div>
 				
 			<div class="submit">
 				<el-button type="primary" @click="submitForm()" style="background:#5b8426;border:none;border-radius:20px;box-shadow:0px 4px 4px 0px rgba(226,75,62,0.33);">登 录</el-button>
-				<div style="margin-top:10px;"><span style="color:#555;">新用户？</span><router-link to='/shopWeb/regist' style="color:#5b8426">立即注册</router-link></div>
+				<div style="margin-top:10px;"><span style="color:#555;">新用户？</span><router-link to='/regist' style="color:#5b8426">立即注册</router-link></div>
 			</div>
 		</div>
 	</div>
@@ -39,8 +39,8 @@ export default{
 	data(){
 		return {
 			ruleForm: {
-				mobile: localStorage.getItem('wwwmobile')||'',
-				password: localStorage.getItem('wwwpassword')||'',
+				mobile: localStorage.getItem('riderMobile')||'',
+				password: localStorage.getItem('riderPwd')||'',
 				type:'riders'
 		    },
 			showPwd:false,
@@ -51,9 +51,9 @@ export default{
 		/*for (var i = 0; i < 10; i++) {
 			console.log('No'+(moment().format('YYMMDDHHmm')).toString() + (Number(Math.random().toString().substr(3, 10)) + Date.now()).toString())
 		}*/
-		if (localStorage.getItem('wwwmobile')&&localStorage.getItem('wwwpassword')) {
+		/*if (localStorage.getItem('wwwmobile')&&localStorage.getItem('wwwpassword')) {
 			this.submitForm()
-		}
+		}*/
 	},
 	methods:{
 		showPwdFun(type){
@@ -96,15 +96,16 @@ export default{
 			this.$dialog.loading.open(' ');
 			this.$api.post('/login',this.ruleForm,result => {
 				this.$dialog.loading.close()
-				localStorage.setItem('wwwmobile',this.ruleForm.mobile)
-				localStorage.setItem('wwwpassword',this.ruleForm.password)
+				localStorage.setItem('riderMobile',this.ruleForm.mobile)
+				localStorage.setItem('riderPwd',this.ruleForm.password)
 				localStorage.setItem('token',result.userInfo.token)
 				sessionStorage.setItem('session',JSON.stringify(result.userInfo))
-				if (result.userInfo.roleType=='web') {
-					this.$router.replace('/shopWeb/index')
+				/*if (result.userInfo.roleType=='web') {
+					this.$router.replace('/index')
 				}else{
-					this.$router.replace('/shopWeb/rider')
-				}
+					this.$router.replace('/rider')
+				}*/
+				this.$router.replace('/rider')
 			},err=>{
 				this.$dialog.loading.close();
               	this.$dialog.toast({

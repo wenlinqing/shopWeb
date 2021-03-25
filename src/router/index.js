@@ -5,20 +5,21 @@ Vue.use(Router)
 
 const router= new Router({
 	mode: 'history',
+	base: '/',
 	routes: [
 	    {
 	  		path:'*',
 	  		name:404,
 	  		hidden:true,
-	  		redirect: '/shopWeb/index'
+	  		redirect: '/index'
 	  	},
 		{
-			path: '/shopWeb/',
+			path: '/',
 			hidden:true,
-			redirect: '/shopWeb/index'
+			redirect: '/index'
 		},
 		{
-			path: '/shopWeb/test',
+			path: '/test',
 			name: '',
 			hidden:true,
 			component: resolve => require(['@/views/web/test'], resolve),
@@ -27,7 +28,7 @@ const router= new Router({
 		    },
 		},
 		{
-			path: '/shopWeb/index',
+			path: '/index',
 			name: '',
 			hidden:true,
 			component: resolve => require(['@/views/web/index'], resolve),
@@ -36,7 +37,7 @@ const router= new Router({
 		    },
 		},
 		{
-			path: '/shopWeb/login',
+			path: '/login',
 			name: 'login',
 			hidden:true,
 			component: resolve => require(['@/views/login/login'], resolve),
@@ -45,7 +46,7 @@ const router= new Router({
 		    },
 		},
 		{
-			path: '/shopWeb/riderLogin',
+			path: '/riderLogin',
 			name: 'riderLogin',
 			hidden:true,
 			component: resolve => require(['@/views/login/riderLogin'], resolve),
@@ -54,7 +55,7 @@ const router= new Router({
 		    },
 		},
 		{
-			path: '/shopWeb/regist',
+			path: '/regist',
 			name: 'regist',
 			hidden:true,
 			component: resolve => require(['@/views/login/regist'], resolve),
@@ -63,7 +64,7 @@ const router= new Router({
 		    },
 		},
 		{
-			path: '/shopWeb/password',
+			path: '/password',
 			name: 'password',
 			hidden:true,
 			component: resolve => require(['@/views/login/password'], resolve),
@@ -72,7 +73,7 @@ const router= new Router({
 		    },
 		},
 		{
-			path: '/shopWeb/orderSubmit',
+			path: '/orderSubmit',
 			name: 'orderSubmit',
 			hidden:true,
 			component: resolve => require(['@/views/web/orderSubmit'], resolve),
@@ -81,7 +82,7 @@ const router= new Router({
 		    },
 		},
 		{
-			path: '/shopWeb/addressList',
+			path: '/addressList',
 			name: 'addressList',
 			hidden:true,
 			component: resolve => require(['@/views/web/addressList'], resolve),
@@ -90,7 +91,7 @@ const router= new Router({
 		    },
 		},
 		{
-			path: '/shopWeb/addressAdd',
+			path: '/addressAdd',
 			name: 'addressAdd',
 			hidden:true,
 			component: resolve => require(['@/views/web/addressAdd'], resolve),
@@ -100,7 +101,7 @@ const router= new Router({
 		    },
 		},
 		{
-			path: '/shopWeb/addressMapPosition',
+			path: '/addressMapPosition',
 			name: 'addressMapPosition',
 			hidden:true,
 			component: resolve => require(['@/views/web/addressMapPosition'], resolve),
@@ -109,7 +110,7 @@ const router= new Router({
 		    },
 		},
 		{
-			path: '/shopWeb/userpersonal',
+			path: '/userpersonal',
 			name: 'userpersonal',
 			hidden:true,
 			component: resolve => require(['@/views/web/userpersonal'], resolve),
@@ -118,7 +119,7 @@ const router= new Router({
 		    },
 		},
 		{
-			path: '/shopWeb/feedback',
+			path: '/feedback',
 			name: 'feedback',
 			hidden:true,
 			component: resolve => require(['@/views/web/feedback'], resolve),
@@ -127,7 +128,7 @@ const router= new Router({
 		    },
 		},
 		{
-			path: '/shopWeb/recharge',
+			path: '/recharge',
 			name: 'recharge',
 			hidden:true,
 			component: resolve => require(['@/views/web/recharge'], resolve),
@@ -136,7 +137,7 @@ const router= new Router({
 		    },
 		},
 		{
-			path: '/shopWeb/rechargeList',
+			path: '/rechargeList',
 			name: 'rechargeList',
 			hidden:true,
 			component: resolve => require(['@/views/web/rechargeList'], resolve),
@@ -146,7 +147,7 @@ const router= new Router({
 		},
 		/////////////////////////////////////////////////////////////////////////
 		{
-			path: '/shopWeb/adminLogin',
+			path: '/adminLogin',
 			name: 'adminLogin',
 			hidden:true,
 			component: resolve => require(['@/views/login/adminLogin'], resolve),
@@ -155,13 +156,13 @@ const router= new Router({
 		    },
 		},
 		{
-			path: '/shopWeb/admin',
+			path: '/admin',
 			name: 'admin',
 			hidden:false,
 			component: resolve => require(['@/views/admin/admin'], resolve),
 			children:[
 				{
-		      		path: '/shopWeb/home',
+		      		path: '/home',
 		      		name:'首页',
 		      		component: resolve => require(['@/views/admin/home'], resolve),
 		      		meta:{
@@ -169,7 +170,7 @@ const router= new Router({
 				    },
 		      	},
 		      	{
-		      		path: '/shopWeb/users',
+		      		path: '/users',
 		      		name:'用户管理',
 		      		component: resolve => require(['@/views/admin/users'], resolve),
 		      		meta:{
@@ -177,7 +178,7 @@ const router= new Router({
 				    },
 		      	},
 		      	{
-		      		path: '/shopWeb/userRecharge',
+		      		path: '/userRecharge',
 		      		name:'用户充值',
 		      		component: resolve => require(['@/views/admin/userRecharge'], resolve),
 		      		meta:{
@@ -185,7 +186,7 @@ const router= new Router({
 				    },
 		      	},
 		      	{
-		      		path: '/shopWeb/productList',
+		      		path: '/productList',
 		      		name:'商品管理',
 		      		component: resolve => require(['@/views/admin/productList'], resolve),
 		      		meta:{
@@ -193,7 +194,7 @@ const router= new Router({
 				    },
 		      	},
 		      	{
-		      		path: '/shopWeb/riderList',
+		      		path: '/riderList',
 		      		name:'骑手管理',
 		      		component: resolve => require(['@/views/admin/riders'], resolve),
 		      		meta:{
@@ -201,7 +202,7 @@ const router= new Router({
 				    },
 		      	},
 		      	{
-		      		path: '/shopWeb/riderWithdraw',
+		      		path: '/riderWithdraw',
 		      		name:'骑手提现',
 		      		component: resolve => require(['@/views/admin/riderWithdraw'], resolve),
 		      		meta:{
@@ -209,7 +210,7 @@ const router= new Router({
 				    },
 		      	},
 		      	{
-		      		path: '/shopWeb/orderList',
+		      		path: '/orderList',
 		      		name:'订单管理',
 		      		component: resolve => require(['@/views/admin/orderList'], resolve),
 		      		meta:{
@@ -228,7 +229,7 @@ const router= new Router({
 		},
 		////////////////////////////////////////////////////////////////////////////
 		{
-			path: '/shopWeb/rider',
+			path: '/rider',
 			name: 'rider',
 			hidden:true,
 			component: resolve => require(['@/views/rider/rider'], resolve),
@@ -237,7 +238,7 @@ const router= new Router({
 		    },
 		},
 		{
-			path: '/shopWeb/ridercenter',
+			path: '/ridercenter',
 			name: 'ridercenter',
 			hidden:true,
 			component: resolve => require(['@/views/rider/ridercenter'], resolve),
@@ -246,7 +247,7 @@ const router= new Router({
 		    },
 		},
 		{
-			path: '/shopWeb/withdraw',
+			path: '/withdraw',
 			name: 'withdraw',
 			hidden:true,
 			component: resolve => require(['@/views/rider/withdraw'], resolve),
@@ -255,7 +256,7 @@ const router= new Router({
 		    },
 		},
 		{
-			path: '/shopWeb/withdrawList',
+			path: '/withdrawList',
 			name: 'withdrawList',
 			hidden:true,
 			component: resolve => require(['@/views/rider/withdrawList'], resolve),
@@ -273,7 +274,7 @@ router.beforeEach((to,from,next)=>{
 	      next();
 	    }else{
 	      next({
-	        path:'/shopWeb/login',
+	        path:'/login',
 	        query:{redirect: to.fullPath}
 	      });
 	    }

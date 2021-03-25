@@ -12,7 +12,7 @@
                 <p><b style="text-decoration: line-through;" v-if="finalPrice!=totalPrice">￥{{totalPrice/100}}</b>  已优惠¥{{(totalPrice-finalPrice)/100}}</p>
             </div>
         </div>
-        <div class="goPay flex flexcenter flex_ac" @click="$router.push('/shopWeb/orderSubmit')">去下单</div>
+        <div class="goPay flex flexcenter flex_ac" @click="$router.push('/orderSubmit')">去下单</div>
     </div>
 
     <div class="carBg" @click="$emit('childEmitParentFun')"></div>

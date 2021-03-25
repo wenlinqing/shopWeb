@@ -12,7 +12,7 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
         '/shopApi/api/': {
-            target: 'http://192.168.101.182:5000', // 你接口的域名
+            target: 'http://192.168.1.126:5000', // 你接口的域名
             // target: 'http://www.hhlloo.com', // 你接口的域名
             secure: true,
             changeOrigin: true
@@ -20,7 +20,7 @@ module.exports = {
     },
 
     // Various Dev Server settings
-    host: 'localhost', // can be overwritten by process.env.HOST
+    host: '192.168.1.126', // can be overwritten by process.env.HOST
     port: 8080, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
     autoOpenBrowser: true,
     errorOverlay: false,

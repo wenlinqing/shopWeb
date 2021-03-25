@@ -167,9 +167,9 @@
             },
             goPersonal(){
                 if (sessionStorage.getItem('session')) {
-                    this.$router.push('/shopWeb/userpersonal');
+                    this.$router.push('/userpersonal');
                 }else{
-                    this.$router.push('/shopWeb/login');
+                    this.$router.push('/login');
                 }
             },
             childEmitParentFun(){
