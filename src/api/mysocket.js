@@ -1,7 +1,7 @@
 let socket = null;
 let lockReconnet = false; //避免重复连接
 // const wsUrl = 'ws://192.168.1.126:8082/socketData';
-const wsUrl = 'ws://121.36.203.217:8082/socketData';
+const wsUrl = 'ws://192.168.238.128:8082/socketData';
 let isReconnet = false;
 let globalCallback = null,sendData = null; //把要发送给socket的数据和处理socket返回数据的回调保存起来
 let createSocket = url =>{ //创建socket

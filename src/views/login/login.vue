@@ -96,8 +96,8 @@ export default{
 			this.$dialog.loading.open(' ');
 			this.$api.post('/login',this.ruleForm,result => {
 				this.$dialog.loading.close()
-				// localStorage.setItem('wwwmobile',this.ruleForm.mobile)
-				// localStorage.setItem('wwwpassword',this.ruleForm.password)
+				localStorage.setItem('wwwmobile',this.ruleForm.mobile)
+				localStorage.setItem('wwwpassword',this.ruleForm.password)
 				localStorage.setItem('token',result.userInfo.token)
 				sessionStorage.setItem('session',JSON.stringify(result.userInfo))
 				// if (result.userInfo.roleType=='web') {

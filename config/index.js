@@ -11,7 +11,7 @@ module.exports = {
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
-        '/shopApi/api/': {
+        '/api/': {
             target: 'http://192.168.1.126:5000', // 你接口的域名
             // target: 'http://www.hhlloo.com', // 你接口的域名
             secure: true,

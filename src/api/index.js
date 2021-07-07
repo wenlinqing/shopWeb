@@ -1,5 +1,5 @@
 // 配置API接口地址
-var root = '/shopApi/api/'
+var root = '/api/'
 
 // 引用axios
 var axios = require('axios')

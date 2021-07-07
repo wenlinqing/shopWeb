@@ -16,7 +16,10 @@ const router= new Router({
 		{
 			path: '/',
 			hidden:true,
-			redirect: '/index'
+			component: resolve => require(['@/views/web/index'], resolve),
+			meta:{
+		        requireAuth:false,
+		    },
 		},
 		{
 			path: '/test',
@@ -218,7 +221,7 @@ const router= new Router({
 				    },
 		      	},
 		      	{
-		      		path: '/admin/saleRecord',
+		      		path: '/saleRecord',
 		      		name:'销售记录',
 		      		component: resolve => require(['@/views/admin/zhu_sales_record'], resolve),
 		      		meta:{
